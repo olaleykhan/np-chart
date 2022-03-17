@@ -12,13 +12,23 @@ export const extractMonthFromTimestamp = (stamp: number) => {
 	return month;
 };
 
-export const formatPosts = (posts: Post[]) => {
-	const formattedPosts = posts.map((post: Post) => {
-		return { ...post, createdAt: extractMonthFromTimestamp(Number(post.createdAt)) };
-	});
 
-	return formattedPosts;
-};
+function pickTopTopics(obj:any, num:number) {
+  var arr = [];
+  var prop;
+  for (prop in obj) {
+    if (obj.hasOwnProperty(prop)) {
+      arr.push({
+        'key': prop,
+        'value': obj[prop]
+      });
+    }
+  }
+  arr.sort(function(a, b) {
+    return a.value - b.value;
+  });
+  return arr.reverse().slice(0, num); // returns array
+}
 
 export const formatForChart = (posts: Post[]) => {
 	const postsWithMonth = posts.map((post: Post) => {
@@ -48,4 +58,8 @@ export const formatForChart = (posts: Post[]) => {
 		}, {});
 		postHash[post.createdAt] = [...postHash[post.createdAt], values];
 	});
+
+	Object.keys(postHash).forEach((key) => postHash[key] = pickTopTopics(postHash[key], 3))
+	
+	return postHash;
 };

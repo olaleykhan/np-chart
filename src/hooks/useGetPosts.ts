@@ -3,7 +3,7 @@ import { gql, useQuery } from '@apollo/client';
 // query the server with below requirements
 const GET_POSTS = gql`
 	query {
-		allPosts(count: 100) {
+		allPosts(count: 1000) {
 			id
 			title
 			published

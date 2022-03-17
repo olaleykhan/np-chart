@@ -6,14 +6,15 @@ import {formatForChart} from './utils/dataFormatter'
 function App() {
 	const { loading, error, data } = useGetPosts();
 
-	if (loading) return <p> Loadiung data....</p>;
+	if (loading) return <p> Loading data....</p>;
+	if (error) return <p> Error fetching data. Please refresh the page</p>
 
 	const datum = formatForChart(data.allPosts)
 
 	console.log(datum);
 	return (
 		<div className='App'>
-			<Chart />
+			<Chart data={datum} />
 		</div>
 	);
 }
